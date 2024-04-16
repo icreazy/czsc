@@ -59,15 +59,16 @@ def get_raw_bars(symbol, freq, sdt, edt, fq='前复权', **kwargs) -> List[RawBa
         period = '60'
     else:
         raise ValueError("不支持的K线周期")
-
     if symbol.lower().startswith('sh') or symbol.lower().startswith('sz') or symbol.isdigit():
         if not symbol.isdigit():
             symbol = symbol[2:]
         # 获取数据, 使用数据为东财数据
         if freq == Freq.D or freq == Freq.W or freq == Freq.M:
-            data = ak.stock_zh_a_hist(symbol=symbol, period=period, start_date=sdt, end_date=edt, adjust=adjust)
+            data = ak.stock_zh_a_hist(symbol=symbol, period=period, start_date=sdt.strftime('%Y%m%d'),
+                                      end_date=edt.strftime('%Y%m%d'), adjust=adjust)
         elif freq == Freq.F1 or freq == Freq.F5 or freq == Freq.F15 or freq == Freq.F30 or freq == Freq.F60:
-            data = ak.stock_zh_a_hist_min_em(symbol=symbol, period=period, start_date=sdt, end_date=edt, adjust=adjust)
+            data = ak.stock_zh_a_hist_min_em(symbol=symbol, period=period, start_date=sdt.strftime('%Y%m%d'),
+                                             end_date=edt.strftime('%Y%m%d'), adjust=adjust)
         else:
             raise ValueError("不支持的K线周期")
     elif symbol.lower().startswith('hk'):
@@ -86,7 +87,7 @@ def get_raw_bars(symbol, freq, sdt, edt, fq='前复权', **kwargs) -> List[RawBa
 
 
 if __name__ == '__main__':
-    symbol = '000001'
-    bars = get_raw_bars(symbol, Freq.D, '20200101', '20240412', fq='前复权')
+    symbol = '603533'
+    bars = get_raw_bars(symbol, Freq.W, '20230417', '20240416', fq='前复权')
     print(bars)
 

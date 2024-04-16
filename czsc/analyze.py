@@ -311,7 +311,7 @@ class CZSC:
         # 如果有信号计算函数，则进行信号计算
         self.signals = self.get_signals(c=self) if self.get_signals else OrderedDict()
 
-    def to_echarts(self, width: str = "1400px", height: str = '580px', bs=None, **kwargs):
+    def to_echarts(self, width: str = "1400px", height: str = '580px', bs=None):
         """绘制K线分析图
 
         :param width: 宽
@@ -330,7 +330,7 @@ class CZSC:
             bi = []
             fx = []
         chart = kline_pro(kline, bi=bi, fx=fx, width=width, height=height, bs=bs,
-                          title="{}-{}".format(self.symbol, self.freq.value), kwargs=kwargs)
+                          title="{}-{}".format(self.symbol, self.freq.value))
         return chart
 
     def to_plotly(self):

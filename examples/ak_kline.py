@@ -1,5 +1,5 @@
 """
-ak test
+ak kline
 """
 
 from czsc.connectors.ak_connector import get_raw_bars
@@ -12,7 +12,6 @@ from datetime import date, timedelta
 if __name__ == '__main__':
     # 设置页面自适应
     st.set_page_config(layout="wide")
-    kwargs = {'range_start': 0}
     with st.sidebar:
         symbol = st.text_input('请输入股票代码:', 'HK02333')
         start_date = st.date_input('请输入开始日期:', value=date.today() + timedelta(days=-30))
@@ -23,20 +22,20 @@ if __name__ == '__main__':
     if query:
         streamlit_echarts.st_pyecharts(
             CZSC(
-                get_raw_bars(symbol, Freq.W, end_date + timedelta(days=-365), end_date, fq=fq)
-            ).to_echarts(kwargs=kwargs), key="weekly")
+                get_raw_bars(symbol, Freq.W, min(start_date, end_date + timedelta(days=-365)), end_date, fq=fq)
+            ).to_echarts(), height="600px", key="weekly")
 
         streamlit_echarts.st_pyecharts(
             CZSC(
                 get_raw_bars(symbol, Freq.D, min(start_date, end_date + timedelta(days=-150)), end_date, fq=fq)
-            ).to_echarts(kwargs=kwargs), key="daily")
+            ).to_echarts(), height="600px", key="daily")
 
         streamlit_echarts.st_pyecharts(
             CZSC(
                 get_raw_bars(symbol, Freq.F30, start_date, end_date, fq=fq)
-            ).to_echarts(), key="30m")
+            ).to_echarts(), height="600px", key="30m")
 
         streamlit_echarts.st_pyecharts(
             CZSC(
                 get_raw_bars(symbol, Freq.F5, start_date, end_date, fq=fq)
-            ).to_echarts(), key="5m")
+            ).to_echarts(), height="600px", key="5m")

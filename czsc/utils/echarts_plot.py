@@ -68,8 +68,7 @@ def kline_pro(kline: List[dict],
               title: str = "缠中说禅K线分析",
               t_seq: List[int] = [],
               width: str = "1400px",
-              height: str = '580px',
-              **kwargs) -> Grid:
+              height: str = '580px') -> Grid:
     """绘制缠中说禅K线分析结果
 
     :param kline: K线
@@ -118,9 +117,9 @@ def kline_pro(kline: List[dict],
     axis_pointer_opts = opts.AxisPointerOpts(is_show=True, link=[{"xAxisIndex": "all"}])
 
     dz_inside = opts.DataZoomOpts(False, "inside", xaxis_index=[0, 1, 2],
-                                  range_start=kwargs.get('range_start', 80), range_end=kwargs.get('range_end', 100))
+                                  range_start=0, range_end=100)
     dz_slider = opts.DataZoomOpts(True, "slider", xaxis_index=[0, 1, 2], pos_top="96%",
-                                  pos_bottom="0%", range_start=80, range_end=100)
+                                  pos_bottom="0%", range_start=0, range_end=100)
 
     yaxis_opts = opts.AxisOpts(is_scale=True, min_="dataMin", max_="dataMax",
                                splitline_opts=opts.SplitLineOpts(is_show=False),
