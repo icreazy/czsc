@@ -32,10 +32,10 @@ if __name__ == '__main__':
 
         streamlit_echarts.st_pyecharts(
             CZSC(
-                get_raw_bars(symbol, Freq.F30, start_date, end_date, fq=fq)
+                get_raw_bars(symbol, Freq.F30, start_date, end_date + timedelta(days=1), fq=fq)
             ).to_echarts(), height="600px", key="30m")
 
         streamlit_echarts.st_pyecharts(
             CZSC(
-                get_raw_bars(symbol, Freq.F5, start_date, end_date, fq=fq)
+                get_raw_bars(symbol, Freq.F5, start_date, end_date + timedelta(days=1), fq=fq)
             ).to_echarts(), height="600px", key="5m")

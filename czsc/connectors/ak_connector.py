@@ -86,8 +86,27 @@ def get_raw_bars(symbol, freq, sdt, edt, fq='前复权', **kwargs) -> List[RawBa
     return format_kline(symbol, data, freq)
 
 
-if __name__ == '__main__':
-    symbol = '603533'
-    bars = get_raw_bars(symbol, Freq.W, '20230417', '20240416', fq='前复权')
-    print(bars)
+def get_stock_info(symbol):
+    """
+    获取股票基本信息
 
+    :param symbol: 股票代码
+    :return: 股票基本信息
+    """
+    if symbol.lower().startswith('sh') or symbol.lower().startswith('sz') or symbol.isdigit():
+        if not symbol.isdigit():
+            symbol = symbol[2:]
+        # 获取数据, 使用数据为东财数据
+        data = ak.stock_individual_info_em(symbol=symbol)
+    elif symbol.lower().startswith('hk'):
+        symbol = symbol[2:].zfill(5)
+        # 获取数据, 使用数据为港股数据
+    else:
+        raise ValueError("不支持的股票代码")
+    return data
+
+
+if __name__ == '__main__':
+    data = ak.stock_us_spot_em()
+    data = data if data['代码'].str.contains('AAPL') else None
+    print(data)
